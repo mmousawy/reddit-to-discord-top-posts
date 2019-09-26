@@ -2,7 +2,7 @@
 
 Extract and show posts from your favourite subreddit in a Discord channel with this script.
 
-![Screenshot of Reddit top posts to Discord in action](https://mmousawy.github.io/reddit-top-posts-discord/img/screenshot.png)
+![Screenshot of Reddit top posts to Discord in action](/img/screenshot.png)
 
 ## Config
 
