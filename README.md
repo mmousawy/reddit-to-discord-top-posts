@@ -53,4 +53,4 @@ Or if you need verbose debug loggin:
 For a nice visual representation of the crontab syntax, check out: https://crontab.guru.
 
 ## Donate
-Please consider donating if you think Ziggurat is helpful to you or that my work is valuable. I am happy if you can [help me buy a cup of coffee](https://paypal.me/MalMousawy). ☕️
+Please consider donating if you think this script is helpful to you or that my work is valuable. I am happy if you can [help me buy a cup of coffee](https://paypal.me/MalMousawy). ☕️
