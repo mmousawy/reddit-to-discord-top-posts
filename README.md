@@ -45,6 +45,11 @@ If you want logging to be activated:
 0 6 * * * /bin/php /var/www/cron/reddit-to-discord/index.php >> /var/www/cron/reddit-to-discord/log 2>&1
 ```
 
+Or if you need verbose debug loggin:
+```bash
+0 6 * * * /bin/php /var/www/cron/reddit-to-discord/index.php?debug >> /var/www/cron/reddit-to-discord/log 2>&1
+```
+
 For a nice visual representation of the crontab syntax, check out: https://crontab.guru.
 
 ## Donate
