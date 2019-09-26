@@ -20,6 +20,7 @@ class RedditExtractor
         $match = $matches[$postIndex];
 
         if (isset($_GET['debug'])) {
+          echo '>> FOUND POST ' . $postIndex . ':' . PHP_EOL . PHP_EOL;
           var_dump($match[0]);
           echo PHP_EOL . PHP_EOL;
         }
@@ -73,6 +74,7 @@ class RedditExtractor
     }
 
     if (isset($_GET['debug'])) {
+      echo '>> EXTRACTED DATA:' . PHP_EOL . PHP_EOL;
       var_dump($posts);
       echo PHP_EOL . PHP_EOL;
     }
@@ -113,7 +115,10 @@ class DiscordWebhookPost
   {
     $hookObject = json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
-    echo $hookObject . PHP_EOL . PHP_EOL;
+    if (isset($_GET['debug'])) {
+      echo '>> WEBHOOK OBJECT:' . PHP_EOL . PHP_EOL;
+      echo $hookObject . PHP_EOL . PHP_EOL;
+    }
 
     $this->curl = curl_init($webhookUrl);
 
@@ -137,7 +142,8 @@ class DiscordWebhookPost
     $response = curl_exec($this->curl);
 
     if (isset($_GET['debug'])) {
-      var_dump($response);
+      echo '>> POST RESPONSE:' . PHP_EOL . PHP_EOL;
+      echo $response . PHP_EOL . PHP_EOL;
     }
 
     curl_close($this->curl);
@@ -145,6 +151,8 @@ class DiscordWebhookPost
     return $response;
   }
 }
+
+echo '>> STARTING - ' . date() . PHP_EOL . PHP_EOL;
 
 $config = json_decode(file_get_contents(__DIR__ . '/config.json'), true);
 
@@ -173,3 +181,5 @@ foreach ($config as $subredditConfig) {
     echo 'Success posting for: ' . $extractedData[0]['subreddit'] . ' -> ' . $response . PHP_EOL;
   }
 }
+
+echo '>> DONE - ' . date() . PHP_EOL . PHP_EOL;
