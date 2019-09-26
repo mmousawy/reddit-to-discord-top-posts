@@ -6,7 +6,7 @@ Extract and show posts from your favourite subreddit in a Discord channel with t
 
 ## Config
 
-Setup the script by adding a `config.json` file with the following:
+Setup the script by adding a `config.json` file with the following contents:
 
 ```jsonc
 [
@@ -16,9 +16,10 @@ Setup the script by adding a `config.json` file with the following:
     "postAmount": 5
   },
 
-  // Add more webhooks and subreddits ...
+  // Add more webhooks and subreddits...
 ]
 ```
+An sample config file can be found in the repo: []
 
 You're able to set values for the following keys:
 
@@ -32,25 +33,33 @@ You're able to set values for the following keys:
 
 I personally use `crontab` to setup a cronjob for every day at 06:00 in the morning (with timezone difference this corresponds roughly to 00:00 EST).
 
-Example:
+To add a cronjob, you can add one of the following lines to the crontab file.
+
+First, open crontab:
+
+```bash
+crontab -e
+```
+
+Then add command to run PHP, referring to the script file:
 
 ```bash
 # Reddit top posts to Discord every day at 06:00
 0 6 * * * /bin/php /var/www/cron/reddit-to-discord/index.php
 ```
 
-If you want logging to be activated:
+If you want logs to be activated:
 
 ```bash
 0 6 * * * /bin/php /var/www/cron/reddit-to-discord/index.php >> /var/www/cron/reddit-to-discord/log 2>&1
 ```
 
-Or if you need verbose debug loggin:
+Or if you need verbose debug logs:
 ```bash
 0 6 * * * /bin/php /var/www/cron/reddit-to-discord/index.php?debug >> /var/www/cron/reddit-to-discord/log 2>&1
 ```
 
-For a nice visual representation of the crontab syntax, check out: https://crontab.guru.
+Need help understanding cronjobs? For a nice visual representation of the crontab syntax, check out: https://crontab.guru.
 
 ## Donate
 Please consider donating if you think this script is helpful to you or that my work is valuable. I am happy if you can [help me buy a cup of coffee](https://paypal.me/MalMousawy). ☕️
