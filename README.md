@@ -19,7 +19,7 @@ Setup the script by adding a `config.json` file with the following contents:
   // Add more webhooks and subreddits...
 ]
 ```
-An sample config file can be found in the repo: []
+A sample config file can be found in the repo: [config.sample.json](https://github.com/mmousawy/reddit-top-posts-discord/blob/master/config.sample.json)
 
 You're able to set values for the following keys:
 
