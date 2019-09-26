@@ -146,7 +146,7 @@ class DiscordWebhookPost
   }
 }
 
-$config = json_decode(file_get_contents('config.json'), true);
+$config = json_decode(file_get_contents(__DIR__ . '/config.json'), true);
 
 foreach ($config as $subredditConfig) {
   $extractor = new RedditExtractor($subredditConfig['subredditUrl']);
@@ -171,6 +171,5 @@ foreach ($config as $subredditConfig) {
     echo 'Error posting for: ' . $extractedData[0]['subreddit'] . PHP_EOL;
   } else {
     echo 'Success posting for: ' . $extractedData[0]['subreddit'] . ' -> ' . $response . PHP_EOL;
-    exit;
   }
 }
