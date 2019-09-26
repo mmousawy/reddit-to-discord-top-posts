@@ -1,11 +1,28 @@
 <?php
 
+/**
+ * Extract post info from subreddit page HTML
+ */
 class RedditExtractor
 {
+  /**
+   * Constructor.
+   *
+   * @param  string $url Subreddit URL to read and extract data from
+   *
+   * @return void
+   */
   function __construct(string $url) {
     $this->html = file_get_contents($url);
   }
 
+  /**
+   * Extract info from reddit posts with a bunch of regex.
+   *
+   * @param  int $postAmount Amount of posts to extract, between 1 and 25
+   *
+   * @return array
+   */
   function extract(int $postAmount = 5): array
   {
     $postRegex = '/class=" thing.+?(?=class=" thing|view more:)/m';
@@ -83,14 +100,29 @@ class RedditExtractor
   }
 }
 
+/**
+ * Convert Reddit post to Discord-friendly object.
+ */
 class RedditPostToDiscordEmbed
 {
+  /**
+   * Constructor.
+   *
+   * @param  array $post Reddit post object to be converted to Discord-friendly object
+   *
+   * @return void
+   */
   function __construct(array $post)
   {
     $this->post = $post;
   }
 
-  function create(): array
+  /**
+   * Convert Reddit post to Discord-friendly object.
+   *
+   * @return array
+   */
+  function convert(): array
   {
     return [
       'author' => [
@@ -108,9 +140,19 @@ class RedditPostToDiscordEmbed
   }
 }
 
-
+/**
+ * Setup the webhook with CURL and post the data.
+ */
 class DiscordWebhookPost
 {
+  /**
+   * Constructor.
+   *
+   * @param  string $webhookUrl The Discord webhook URL to send the data to.
+   * @param  array $data The data to be sent to the webhook.
+   *
+   * @return void
+   */
   function __construct(string $webhookUrl, array $data)
   {
     $hookObject = json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
@@ -137,6 +179,11 @@ class DiscordWebhookPost
     ]);
   }
 
+  /**
+   * Execute the CURL command and post the data.
+   *
+   * @return bool
+   */
   function post(): bool
   {
     $response = curl_exec($this->curl);
@@ -162,7 +209,7 @@ foreach ($config as $subredditConfig) {
 
   $postsData = array_map(function($extractedPost) use ($config) {
     $embed = new RedditPostToDiscordEmbed($extractedPost);
-    return $embed->create();
+    return $embed->convert();
   }, $extractedData);
 
   $discordData = [
@@ -176,9 +223,9 @@ foreach ($config as $subredditConfig) {
   $response = $webhookPost->post();
 
   if (!$response) {
-    echo 'Error posting for: ' . $extractedData[0]['subreddit'] . PHP_EOL;
+    echo '- Error posting for: ' . $extractedData[0]['subreddit'] . PHP_EOL;
   } else {
-    echo 'Success posting for: ' . $extractedData[0]['subreddit'] . ' -> ' . $response . PHP_EOL;
+    echo '- Success posting for: ' . $extractedData[0]['subreddit'] . ' -> ' . $response . PHP_EOL;
   }
 }
 
