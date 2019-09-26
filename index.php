@@ -19,6 +19,11 @@ class RedditExtractor
       for ($postIndex = 0; $postIndex < $postAmount; $postIndex++) {
         $match = $matches[$postIndex];
 
+        if (isset($_GET['debug'])) {
+          var_dump($match[0]);
+          echo PHP_EOL . PHP_EOL;
+        }
+
         if (!isset($match)) {
           break;
         }
@@ -32,7 +37,7 @@ class RedditExtractor
           'comments' => '/data-comments-count="(\d+?)"/',
           'author' => '/data-author="(.+?)"/',
           'permalink' => '/data-permalink="(.+?)"/',
-          'thumbnail' => '/action="thumbnail".+<img src="(.+?)"/',
+          'thumbnail' => '/action="thumbnail".+?<img src="(.+?)"/',
           'date' => '/datetime="(.+?)"/'
         ];
 
@@ -44,8 +49,19 @@ class RedditExtractor
           if (isset($matchedValue[1][0])) {
             if ($key === 'date') {
               $value = substr($matchedValue[1][0], 0, 19);
+            } else if ($key === 'thumbnail') {
+              // Check if protocol is defined in URL, otherwise add it
+              if (strpos($matchedValue[1][0], 'http') === false) {
+                $value = 'https:' . $matchedValue[1][0];
+              } else {
+                $value = $matchedValue[1][0];
+              }
             } else {
               $value = $matchedValue[1][0];
+            }
+          } else {
+            if ($key === 'thumbnail') {
+              $value = 'https://mmousawy.github.io/reddit-top-posts-discord/img/text-placeholder.png';
             }
           }
 
@@ -54,6 +70,11 @@ class RedditExtractor
 
         array_push($posts, $post);
       }
+    }
+
+    if (isset($_GET['debug'])) {
+      var_dump($posts);
+      echo PHP_EOL . PHP_EOL;
     }
 
     return $posts;
@@ -78,7 +99,7 @@ class RedditPostToDiscordEmbed
       'description' => $this->post['upvotes']. ' upvotes - ' . $this->post['comments'] . ' comments',
       'url' => 'https://reddit.com' . $this->post['permalink'],
       'thumbnail' => [
-        'url' => 'https:' . $this->post['thumbnail']
+        'url' => $this->post['thumbnail']
       ],
       'timestamp' => $this->post['date']
     ];
@@ -115,6 +136,10 @@ class DiscordWebhookPost
   {
     $response = curl_exec($this->curl);
 
+    if (isset($_GET['debug'])) {
+      var_dump($response);
+    }
+
     curl_close($this->curl);
 
     return $response;
@@ -146,5 +171,6 @@ foreach ($config as $subredditConfig) {
     echo 'Error posting for: ' . $extractedData[0]['subreddit'] . PHP_EOL;
   } else {
     echo 'Success posting for: ' . $extractedData[0]['subreddit'] . ' -> ' . $response . PHP_EOL;
+    exit;
   }
 }
