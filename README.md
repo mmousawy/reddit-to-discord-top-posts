@@ -8,7 +8,7 @@ Extract and show posts from your favourite subreddit in a Discord channel with t
 
 Setup the script by adding a `config.json` file with the following:
 
-```json
+```jsonc
 [
   {
     "webhookUrl": "https://discordapp.com/api/webhooks/...",
@@ -16,7 +16,7 @@ Setup the script by adding a `config.json` file with the following:
     "postAmount": 5
   },
 
-  ...
+  // Add more webhooks and subreddits ...
 ]
 ```
 
