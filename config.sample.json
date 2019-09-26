@@ -1,18 +1,18 @@
 [
   {
-    "webhookUrl": "",
+    "webhookUrl": "https://discordapp.com/api/webhooks/...",
     "redditUrl": "https://old.reddit.com/r/HuntShowdown/top/?sort=top&t=day",
     "postAmount": 5
   },
 
   {
-    "webhookUrl": "",
+    "webhookUrl": "https://discordapp.com/api/webhooks/...",
     "redditUrl": "https://old.reddit.com/r/QuakeChampions/top/?sort=top&t=day",
     "postAmount": 5
   },
 
   {
-    "webhookUrl": "",
+    "webhookUrl": "https://discordapp.com/api/webhooks/...",
     "redditUrl": "https://old.reddit.com/r/diablo3/top/?sort=top&t=day",
     "postAmount": 5
   }
