@@ -199,7 +199,7 @@ class DiscordWebhookPost
   }
 }
 
-echo '>> STARTING - ' . date() . PHP_EOL . PHP_EOL;
+echo '>> STARTING - ' . date('Y-m-d H:m:s') . PHP_EOL . PHP_EOL;
 
 $config = json_decode(file_get_contents(__DIR__ . '/config.json'), true);
 
@@ -225,8 +225,8 @@ foreach ($config as $subredditConfig) {
   if (!$response) {
     echo '- Error posting for: ' . $extractedData[0]['subreddit'] . PHP_EOL;
   } else {
-    echo '- Success posting for: ' . $extractedData[0]['subreddit'] . ' -> ' . $response . PHP_EOL;
+    echo '- Success posting for: ' . $extractedData[0]['subreddit'] . PHP_EOL;
   }
 }
 
-echo '>> DONE - ' . date() . PHP_EOL . PHP_EOL;
+echo '>> DONE - ' . date('Y-m-d H:m:s') . PHP_EOL . PHP_EOL;
