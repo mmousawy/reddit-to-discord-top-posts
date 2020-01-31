@@ -173,8 +173,8 @@ class DiscordWebhookPost
       CURLOPT_POSTFIELDS     => $hookObject,
       CURLOPT_RETURNTRANSFER => true,
       CURLOPT_HTTPHEADER     => [
-        'Length' => strlen($hookObject),
-        'Content-Type' => 'application/json'
+        'Length: ' . strlen($hookObject),
+        'Content-Type: application/json'
       ]
     ]);
   }
@@ -199,7 +199,7 @@ class DiscordWebhookPost
   }
 }
 
-echo '>> STARTING - ' . date('Y-m-d H:m:s') . PHP_EOL . PHP_EOL;
+echo '>> STARTING - ' . date('Y-m-d H:m:s') . PHP_EOL;
 
 $config = json_decode(file_get_contents(__DIR__ . '/config.json'), true);
 
@@ -211,6 +211,8 @@ foreach ($config as $subredditConfig) {
     $embed = new RedditPostToDiscordEmbed($extractedPost);
     return $embed->convert();
   }, $extractedData);
+
+  var_dump($postsData);
 
   $discordData = [
     'username' => 'Reddit top posts to Discord',
@@ -225,7 +227,7 @@ foreach ($config as $subredditConfig) {
   if (!$response) {
     echo '- Error posting for: ' . $extractedData[0]['subreddit'] . PHP_EOL;
   } else {
-    echo '- Success posting for: ' . $extractedData[0]['subreddit'] . PHP_EOL;
+    echo '- Success posting for: ' . $extractedData[0]['subreddit'] . ' -> ' . $response . PHP_EOL;
   }
 }
 
