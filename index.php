@@ -212,8 +212,6 @@ foreach ($config as $subredditConfig) {
     return $embed->convert();
   }, $extractedData);
 
-  var_dump($postsData);
-
   $discordData = [
     'username' => 'Reddit top posts to Discord',
     'avatar_url' => 'https://mmousawy.github.io/reddit-top-posts-discord/img/avatar.png',
